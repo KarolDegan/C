@@ -1,0 +1,39 @@
+def e(i): return 2*i+1
+def d(i): return 2*i+2
+
+def exiba (v,i=0,h=0):
+    if i>=len(v): return
+    exiba(v,d(i),h+1)
+    print('%*s'%(5*h,v[i]))
+    exiba(v,e(i),h+1)
+
+def troca(v,i,j):
+    aux = v[i]
+    v[i] = v[j]
+    v[j] = aux
+
+def desce_min(i,v,n):
+    while 2*i+1 < n:
+        j = 2*i+1
+        if j+1 < n and v[j+1]<v[j]: j += 1
+        if v[i] <= v[j]: break
+        troca(v,i,j)
+        i = j
+
+def amontoa_min(v):
+    n = len(v)
+    for i in reversed(range(0,n//2)):
+        desce_min(i,v,n)
+
+def hsortd(v):
+    amontoa_min(v)
+    n = len(v)
+    for i in reversed(range(1,n)):
+        troca(v,0,i)
+        desce_min(0,v,i)
+
+v = [16,64,47,21,30,75,99,80,51,47]
+amontoa_min(v)
+exiba(v)
+hsortd(v)
+print(v)
